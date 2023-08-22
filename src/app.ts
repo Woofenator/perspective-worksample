@@ -12,13 +12,9 @@ app.use((_req, _res, next) => {
     RequestContext.create(orm.em, next);
 });
 
-app.use(userRouter);
+app.use('/users', userRouter);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    if (res.headersSent) {
-        next(err);
-    }
-
     if (!(err instanceof BaseException)) {
         console.error(err);
 

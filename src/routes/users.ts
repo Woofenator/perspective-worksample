@@ -1,29 +1,28 @@
 import { Request, Response, Router } from 'express';
+import asyncHandler from 'express-async-handler';
 import { body, validationResult } from 'express-validator';
-import { HttpUnprocessableEntityException } from '../exceptions/HttpUnprocessableEntity.js';
-import { orm } from '../database/orm.js';
-import { User } from '../database/entities/user.js';
 import httpStatus from 'http-status';
+import { User } from '../database/entities/user.js';
+import { orm } from '../database/orm.js';
+import { HttpUnprocessableEntityException } from '../exceptions/HttpUnprocessableEntity.js';
 
 const router = Router();
 
-router
-    .route('users')
-    .post(
-        body('name').trim().notEmpty().isString(),
-        body('email').isEmail().trim(),
-        async (req: Request, res: Response) => {
-            const validation = validationResult(req);
+router.route('').post(
+    body('name').trim().notEmpty().isString(),
+    body('email').isEmail().trim(),
+    asyncHandler(async (req: Request, res: Response) => {
+        const validation = validationResult(req);
 
-            if (!validation.isEmpty()) {
-                throw new HttpUnprocessableEntityException(validation.array);
-            }
+        if (!validation.isEmpty()) {
+            throw new HttpUnprocessableEntityException(validation.array());
+        }
 
-            const user = new User(req.body);
-            await orm.em.flush();
+        const user = new User(req.body);
+        await orm.em.persistAndFlush([user]);
 
-            return res.status(httpStatus.CREATED).send({ status: 'success' });
-        },
-    );
+        res.status(httpStatus.CREATED).send({ status: 'success' });
+    }),
+);
 
 export { router as userRouter };
