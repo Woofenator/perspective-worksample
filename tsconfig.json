@@ -5,13 +5,14 @@
         "incremental": true,
         "esModuleInterop": true,
         "module": "NodeNext",
-        "moduleResolution": "node",
+        "moduleResolution": "NodeNext",
         "resolveJsonModule": true,
         "outDir": "./dist",
         "allowSyntheticDefaultImports": true,
         "noImplicitAny": true,
-        "target": "ESNext",
-        "types": ["node"]
+        "target": "ES2022",
+        "types": ["node"],
+        "experimentalDecorators": true
     },
     "include": ["./src/**/*.ts", "./test/**/*.ts"]
 }

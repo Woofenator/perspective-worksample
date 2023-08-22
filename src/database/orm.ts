@@ -1,11 +1,11 @@
 import { MikroORM } from '@mikro-orm/core';
-import { BetterSqliteDriver } from '@mikro-orm/better-sqlite';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
+import { SqliteDriver } from '@mikro-orm/sqlite';
+import { User } from './entities/user.js';
 
-export const orm = await MikroORM.init<BetterSqliteDriver>({
-    entities: ['./dist/database/entities/*.js'],
-    entitiesTs: ['./src/database/entities/*.ts'],
+export const orm = await MikroORM.init<SqliteDriver>({
+    entities: [User],
     metadataProvider: TsMorphMetadataProvider,
-    dbName: 'work-example',
-    type: 'better-sqlite',
+    dbName: 'work-example.sqlite',
+    type: 'sqlite',
 });
