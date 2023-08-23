@@ -24,7 +24,7 @@ router
             // Save user entity in database
             await orm.em.persistAndFlush([user]);
 
-            res.status(httpStatus.CREATED).send({ status: 'success' });
+            res.status(httpStatus.CREATED).send({ status: 'success', data: user });
         }),
     )
     .get(
@@ -46,7 +46,10 @@ router
                 },
             );
 
-            res.status(httpStatus.OK).send(users);
+            res.status(httpStatus.OK).send({
+                status: 'success',
+                body: users,
+            });
         }),
     );
 

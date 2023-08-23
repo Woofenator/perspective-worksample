@@ -7,14 +7,16 @@ import { BaseException } from './exceptions/baseException.js';
 
 const app = express();
 
-app.use(cors()).use(express.json()).options('*', cors());
+app.use(cors());
+app.use(express.json());
+app.options('*', cors());
 app.use((_req, _res, next) => {
     RequestContext.create(orm.em, next);
 });
 
 app.use('/users', userRouter);
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
     if (!(err instanceof BaseException)) {
         console.error(err);
 
@@ -26,6 +28,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
         message: err.message,
         body: err.body,
     });
-});
+}
+
+app.use(errorHandler);
 
 export { app };

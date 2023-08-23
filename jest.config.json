@@ -1,0 +1,8 @@
+{
+    "verbose": true,
+    "preset": "ts-jest/presets/default-esm",
+    "resolver": "ts-jest-resolver",
+    "testEnvironment": "node",
+    "silent": false,
+    "testPathIgnorePatterns": ["/node_modules/", "/dist/"]
+}
