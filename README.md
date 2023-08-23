@@ -1,17 +1,26 @@
 # Backend Engineer Worksample
 
-This project skeleton contains a basic Express setup one endpoint to create a user and one endpoint to fetch all users, as well as a basic empty unit test.
+Finished backend engineer worksample by Maris Jirgens
 
-## Scripts 
+## Scripts
+
 `npm start` starts the server
 
 `npm test` executes the tests
 
-## Goal
-1. Adjust one endpoint so it accepts a user and stores it in a database.
-2. Adjust one endpoint so it returns (all) users from the database.
-   * This endpoint should be able to receive a query parameter `created` which sorts users by creation date ascending or descending.
+## Usage
 
-Feel free to add or change this project as you like.
+One endpoint available: `/users` which accepts `GET` and `POST` requests
 
+On `GET` request, returns all users present in the database, and can be given a `created` query key with values `asc` or `desc` to sort users by creation date
 
+On `POST` request, accepts body in the shape of:
+
+```json
+{
+   "name": "Foo Bar",
+   "email": "foo.bar@example.com"
+}
+```
+
+The included sqlite database is pre-filled with some data already
